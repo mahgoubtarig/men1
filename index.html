@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>html{color-scheme:light}body{margin:0;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>الخلطة الخاصة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lalezar&display=swap">
+<style>
+  /* Layout: one centered column, sticky category strip, each category a banner followed by a three-column price list (name, kcal, price). */
+  :root {
+    --bg: #fbf1dc;
+    --surface: #fff8ea;
+    --ink: #3a2412;
+    --muted: #7d6650;
+    --orange: #e8731f;
+    --orange-ink: #ffffff;
+    --green: #6f9a3a;
+    --green-ink: #ffffff;
+    --line: #ecd9b4;
+    --price: #c4560c;
+    --display: "Lalezar", "Cairo", system-ui, sans-serif;
+    --body: "Cairo", system-ui, "Segoe UI", Tahoma, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1f1710; --surface: #2a1f15; --ink: #f6e8d0; --muted: #b9a387;
+      --orange: #f08a3a; --orange-ink: #2a1505; --green: #8dbb55; --green-ink: #172208;
+      --line: #43321f; --price: #ffa561; color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1f1710; --surface: #2a1f15; --ink: #f6e8d0; --muted: #b9a387;
+    --orange: #f08a3a; --orange-ink: #2a1505; --green: #8dbb55; --green-ink: #172208;
+    --line: #43321f; --price: #ffa561; color-scheme: dark;
+  }
+
+  body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.5; }
+  .wrap { max-width: 720px; margin-inline: auto; padding-inline: 16px; padding-block: 0 40px; }
+
+  header { text-align: center; padding-block: 28px 18px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .mark { width: 64px; height: 64px; }
+  h1 { font-family: var(--display); font-weight: 400; color: var(--orange); font-size: clamp(30px, 8vw, 46px); line-height: 1.15; margin: 0; text-wrap: balance; }
+  .brand-sub { color: var(--green); font-weight: 700; letter-spacing: .04em; margin: 0; font-size: 14px; }
+  .tagline { background: var(--orange); color: var(--orange-ink); font-weight: 700; padding: 4px 18px; border-radius: 4px; font-size: 14px; letter-spacing: .03em; margin: 0; }
+
+  .bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-block: 1px solid var(--line); margin-inline: -16px; padding: 8px 16px; display: flex; gap: 8px; align-items: center; }
+  .chips { display: flex; gap: 8px; overflow-x: auto; flex: 1; min-width: 0; scrollbar-width: none; }
+  .chips::-webkit-scrollbar { display: none; }
+  .chips a { flex: none; text-decoration: none; color: var(--ink); background: var(--surface); border: 1px solid var(--line); padding: 6px 14px; border-radius: 999px; font-size: 14px; font-weight: 600; white-space: nowrap; }
+  .chips a:hover { border-color: var(--orange); }
+  .chips a:focus-visible, .lang:focus-visible { outline: 3px solid var(--green); outline-offset: 2px; }
+  .lang { flex: none; background: var(--green); color: var(--green-ink); border: 0; font: inherit; font-weight: 700; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 14px; }
+
+  section { margin-top: 28px; scroll-margin-top: 72px; }
+  section h2 { margin: 0; background: var(--orange); color: var(--orange-ink); font-family: var(--display); font-weight: 400; font-size: 22px; padding: 6px 18px; border-radius: 6px; text-align: center; line-height: 1.4; }
+  .cols, .row { display: grid; grid-template-columns: 1fr 76px 64px; column-gap: 10px; align-items: baseline; }
+  .cols { margin-top: 10px; font-size: 12px; font-weight: 700; color: var(--green-ink); }
+  .cols span { background: var(--green); padding: 1px 6px; border-radius: 3px; text-align: center; }
+  .cols span:first-child { text-align: start; }
+  .row { padding: 9px 4px; border-bottom: 1px dashed var(--line); }
+  .row .n { min-width: 0; overflow-wrap: anywhere; }
+  .row .k { color: var(--muted); font-size: 14px; text-align: center; font-variant-numeric: tabular-nums; }
+  .row .p { color: var(--price); font-weight: 700; text-align: center; font-variant-numeric: tabular-nums; }
+  .row .p small { font-weight: 600; font-size: 11px; margin-inline-start: 2px; }
+  .sub { margin: 6px 0 0; color: var(--muted); font-size: 14px; text-align: center; }
+
+  footer { margin-top: 36px; background: var(--orange); color: var(--orange-ink); border-radius: 8px; padding: 14px 16px; text-align: center; font-weight: 700; font-size: 14px; letter-spacing: .02em; text-wrap: balance; }
+</style>
+</head>
+<body>
+
+
+<div class="wrap" id="app">
+  <header>
+    <svg class="mark" viewBox="0 0 64 64" aria-hidden="true">
+      <path d="M16 18h32l-4 34a4 4 0 0 1-4 4H24a4 4 0 0 1-4-4z" fill="var(--orange)"/>
+      <rect x="14" y="12" width="36" height="8" rx="3" fill="var(--green)"/>
+      <circle cx="46" cy="18" r="9" fill="var(--surface)" stroke="var(--orange)" stroke-width="3"/>
+      <path d="M46 10v16M38 18h16M40.3 12.3l11.4 11.4M51.7 12.3L40.3 23.7" stroke="var(--orange)" stroke-width="1.5"/>
+      <path d="M24 30h16M25 38h14" stroke="var(--surface)" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+    <h1 id="title"></h1>
+    <p class="brand-sub" id="sub"></p>
+    <p class="tagline" id="tag"></p>
+  </header>
+
+  <div class="bar">
+    <nav class="chips" id="chips"></nav>
+    <button class="lang" id="lang" type="button"></button>
+  </div>
+
+  <main id="menu"></main>
+  <footer id="foot"></footer>
+</div>
+
+<script>
+const UI = {
+  ar: { title: "كافتيريا الخلطة الخاصة للوجبات السريعة", sub: "الخلطة الخاصة · The special mixture", tag: "طازج · نكهة مميزة · سريع · جودة عالية", item: "الصنف", price: "السعر", kcal: "سعرات", sar: "ر.س", lang: "English", foot: "جميع الأسعار بالريال السعودي · مكونات طازجة · تُحضَّر طازجة يوميًا · تُجهَّز عند الطلب", doc: "الخلطة الخاصة" },
+  en: { title: "The Special Mixture Cafeteria", sub: "الخلطة الخاصة · Fast Meals", tag: "FRESH · FLAVORFUL · FAST · QUALITY", item: "Item", price: "Price", kcal: "Calories", sar: "SAR", lang: "العربية", foot: "ALL PRICES ARE IN SAR · FRESH INGREDIENTS · PREPARED FRESH DAILY · MADE TO ORDER", doc: "The Special Mixture" }
+};
+
+// [en, ar, price SAR, calories]
+const MENU = [
+  { id: "fast", en: "Fast Meals", ar: "الوجبات السريعة", items: [
+    ["Large Crispy Chicken Breast", "صدر دجاج كرسبي كبير", 16, 345],
+    ["Medium Crispy Chicken Breast", "صدر دجاج كرسبي متوسط", 12, 312],
+    ["Small Crispy Chicken Breast", "صدر دجاج كرسبي صغير", 12, 210],
+    ["Large Crispy Chicken with Cheese", "دجاج كرسبي كبير بالجبن", 16, 385],
+    ["Medium Crispy Chicken with Cheese", "دجاج كرسبي متوسط بالجبن", 12, 398],
+    ["Small Crispy Chicken with Cheese", "دجاج كرسبي صغير بالجبن", 12, 348],
+    ["Large Spicy Crispy Chicken", "دجاج كرسبي حار كبير", 12, 415],
+    ["Medium Spicy Crispy Chicken", "دجاج كرسبي حار متوسط", 12, 389]
+  ]},
+  { id: "mutabbaq", en: "Mutabbaq Section", ar: "قسم المطبق", items: [
+    ["Liquid Mutabbaq", "مطبق سائل", 7, 285],
+    ["Liquid Cheese Mutabbaq", "مطبق جبن سائل", 7, 477],
+    ["Sweet Liquid Cheese Mutabbaq", "مطبق جبن سائل حلو", 7, 477],
+    ["Banana Cheese Mutabbaq", "مطبق موز بالجبن", 7, 655],
+    ["Banana Mixed Veggie Mutabbaq", "مطبق موز بالخضار المشكلة", 6, 268]
+  ]},
+  { id: "triplets", en: "Triplets · Al Jamahir Deal (4 pieces)", ar: "تريبلتس · عرض الجماهير (4 قطع)", items: [
+    ["Mixed Veggie Cheese Mutabbaq", "مطبق خضار مشكلة بالجبن", 6, 366],
+    ["Salty Cheese Mutabbaq", "مطبق جبن مالح", 6, 324],
+    ["Triplet Beef Shawarma", "تريبلت شاورما لحم بقري", 6, 324],
+    ["Triplet Chicken Shawarma", "تريبلت شاورما دجاج", 6, 385],
+    ["Triplet Beef Liver", "تريبلت كبدة بقري", 8, 493],
+    ["Triplet Chicken Liver", "تريبلت كبدة دجاج", 8, 492],
+    ["Triplet Kebab", "تريبلت كباب", 8, 480],
+    ["Triplet Sausage", "تريبلت نقانق", 6, 344],
+    ["Triplet Mashed Mix", "تريبلت حمص مشكل", 6, 347],
+    ["Triplet Chicken Strips", "تريبلت شرائح كرسبي", 6, 365],
+    ["Triplet Chicken Liver Meal", "وجبة كبدة دجاج", 12, 458]
+  ]},
+  { id: "plates", en: "Breakfast / Dinner Plates", ar: "أطباق الفطور / العشاء", items: [
+    ["Lamb Liver Plate", "طبق كبدة غنم", 18, 236],
+    ["Beef Liver Plate", "طبق كبدة بقري", 15, 254],
+    ["Chicken Plate", "طبق دجاج", 15, 234],
+    ["Plain Chicken Plate", "طبق دجاج سادة", 8, 235],
+    ["Chicken with Bell Pepper Plate", "طبق دجاج مع الفلفل الرومي", 8, 245],
+    ["Chicken Liver Plate", "طبق كبدة دجاج", 8, 298],
+    ["Fava Bean Jar Plate", "طبق فول بالجرة", 8, 264],
+    ["Lebanese Fava Bean Plate", "طبق فول لبناني", 8, 274],
+    ["Plain Fava Bean Plate", "طبق فول سادة", 8, 278],
+    ["Pineapple Plate", "طبق أناناس", 10, 245],
+    ["Mixed Berry Pineapple Plate", "طبق أناناس بالتوت المشكل", 10, 267],
+    ["Mixed Salty Plate", "طبق مشكل مملح", 10, 268],
+    ["Mashed Hummus Plate", "طبق حمص مهروس", 10, 269],
+    ["Sausage Plate", "طبق نقانق", 16, 245],
+    ["Chicken Plate (Large)", "طبق دجاج كبير", 16, 217],
+    ["Grilled Chicken Kebab Plate", "طبق شيش كباب دجاج مشوي", 7, 256]
+  ]},
+  { id: "jumbo", en: "Jumbo", ar: "جامبو", items: [
+    ["Jumbo", "جامبو", 10, 234],
+    ["Jumbo Chicken", "جامبو دجاج", 10, 235],
+    ["Jumbo Chicken with Cheese", "جامبو دجاج بالجبن", 10, 241],
+    ["Jumbo Spicy Chicken with Cheese", "جامبو دجاج حار بالجبن", 10, 258],
+    ["Jumbo Burger", "جامبو برجر", 6, 236],
+    ["Jumbo Spicy Burger", "جامبو برجر حار", 5, 210],
+    ["Jumbo Shawarma", "جامبو شاورما", 5, 230],
+    ["Jumbo Chicken Shawarma", "جامبو شاورما دجاج", 6, 214],
+    ["Jumbo Chicken Shawarma with Cheese", "جامبو شاورما دجاج بالجبن", 10, 299],
+    ["Jumbo Liver Strips", "جامبو شرائح كبدة", 10, 238],
+    ["Jumbo Spicy Liver Strips", "جامبو شرائح كبدة حار", 10, 258],
+    ["Jumbo Chicken Liver Meal", "جامبو وجبة كبدة دجاج", 10, 221]
+  ]}
+];
+
+let lang = "ar";
+try { const s = localStorage.getItem("menu-lang"); if (s === "en" || s === "ar") lang = s; } catch (e) {}
+
+function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+
+function render() {
+  const t = UI[lang];
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+  document.title = t.doc;
+  document.getElementById("title").textContent = t.title;
+  document.getElementById("sub").textContent = t.sub;
+  document.getElementById("tag").textContent = t.tag;
+  document.getElementById("foot").textContent = t.foot;
+  const btn = document.getElementById("lang");
+  btn.textContent = t.lang;
+
+  const chips = document.getElementById("chips");
+  chips.replaceChildren();
+  const menu = document.getElementById("menu");
+  menu.replaceChildren();
+
+  MENU.forEach(sec => {
+    const a = el("a", null, sec[lang]); a.href = "#" + sec.id;
+    a.addEventListener("click", ev => { ev.preventDefault(); document.getElementById(sec.id).scrollIntoView({ behavior: "smooth", block: "start" }); });
+    chips.appendChild(a);
+
+    const s = el("section"); s.id = sec.id;
+    s.appendChild(el("h2", null, sec[lang]));
+    const cols = el("div", "cols");
+    [t.item, t.kcal, t.price].forEach(x => cols.appendChild(el("span", null, x)));
+    s.appendChild(cols);
+    sec.items.forEach(it => {
+      const r = el("div", "row");
+      r.appendChild(el("span", "n", lang === "ar" ? it[1] : it[0]));
+      r.appendChild(el("span", "k", String(it[3])));
+      const p = el("span", "p", String(it[2])); p.appendChild(el("small", null, t.sar));
+      r.appendChild(p);
+      s.appendChild(r);
+    });
+    menu.appendChild(s);
+  });
+}
+
+document.getElementById("lang").addEventListener("click", () => {
+  lang = lang === "ar" ? "en" : "ar";
+  try { localStorage.setItem("menu-lang", lang); } catch (e) {}
+  render();
+});
+render();
+</script>
+
+</body>
+</html>
